@@ -28,7 +28,7 @@
             font-size: 120%;
         }
         #marker {
-            text-align: center;
+            text-align: left;
         }
         .header {
             background-color: #004BAF;
@@ -246,13 +246,13 @@
                                 {% set ns.platPerRelease = ns.platPerRelease +1  %}  \
                             {% endfor %} \
                         {% set ns.alias = "" %} \
-                        {% if keys1[0] == "9.0.4jS5" %}   \
+                        {% if keys1[0] == "3.0.4jS6" %}   \
                             {% set ns.alias = "FPMR3" %}  \
-                        {% elif keys1[0] == "4.0.1e" %}   \
+                        {% elif keys1[0] == "4.0.1f" %}   \
                             {% set ns.alias = "HP"%} \
-                        {% elif keys1[0] == "4.0.2dS10" %}   \
+                        {% elif keys1[0] == "4.0.2f" %}   \
                             {% set ns.alias = "HPMR1" %} \
-                        {% elif keys1[0] == "4.0.3.98" %}  \
+                        {% elif keys1[0] == "4.0.3.141" %}  \
                             {% set ns.alias = "HPMR3" %} \
                         {% elif keys1[0] == "3.1.3i" %}   \
                             {% set ns.alias = "GPMR2" %} \
@@ -271,13 +271,13 @@
                             {% set ns.platPerRelease = ns.platPerRelease +1  %}  \
                         {% endfor %} \
                         {% set ns.alias = "" %} \
-                        {% if keys1[0] == "9.0.4jS5" %}   \
+                        {% if keys1[0] == "3.0.4jS6" %}   \
                             {% set ns.alias = "FPMR3" %} \
-                        {% elif keys1[0] == "4.0.1e" %}  \
+                        {% elif keys1[0] == "4.0.1f" %}  \
                             {% set ns.alias = "HP"%} \
-                        {% elif keys1[0] == "4.0.2dS10" %}  \
+                        {% elif keys1[0] == "4.0.2f" %}  \
                             {% set ns.alias = "HPMR1" %} \
-                        {% elif keys1[0] == "4.0.3.98" %}  \
+                        {% elif keys1[0] == "4.0.3.141" %}  \
                             {% set ns.alias = "HPMR3"%} \
                         {% elif keys1[0] == "3.1.3i" %}   \
                             {% set ns.alias = "GPMR2" %} \
@@ -537,6 +537,31 @@
                 }
                 // $.LoadingOverlay("hide");
                 $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
+                var headerLen = {{header}}
+                
+              
+                
+                        
+              
+                var platformLength=0;        
+                console.log(`headerLen ${headerLen} ${Object.keys(headerLen).length}`)
+                for (head in headerLen) {
+                    console.log(`head ${head} `)
+                    
+                    for (plKeys in headerLen[head]){
+                        console.log(`headerLen[head] ${headerLen[head]} `)
+                        console.log(`plKeys ${plKeys} `)
+                        platformLength++;
+                        
+                    }
+                }
+                console.log(`platformLength is ${platformLength}`)
+                if (platformLength <= 3 ) {
+                $(".dataTables_scrollHeadInner").css("width", "100%");
+                $(".dataTables_scrollHeadInner").children("table").css("width", "100%");
+                $("#example1").css("width", "100%");
+                }
+                
             }
             function hide_all_platfrom(table) {
                 var dfrd1 = $.Deferred();
