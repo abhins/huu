@@ -28,7 +28,7 @@
             font-size: 120%;
         }
         #marker {
-            text-align: left;
+            text-align: right;
         }
         .header {
             background-color: #004BAF;
@@ -224,7 +224,6 @@
     <div class="header">
         <h1>UCS C-Series Rack-Mount Standalone Server HUU Component Comparison</h1>
     </div>
-
     {% set ns = namespace() %}
     {% set ns.totalReleases = 0 %}
     {% set ns.platPerRelease = 0 %}
@@ -552,8 +551,42 @@
                         console.log(`headerLen[head] ${headerLen[head]} `)
                         console.log(`plKeys ${plKeys} `)
                         platformLength++;
-                        
                     }
+                    //$.LoadingOverlay("hide");
+                    table.columns.adjust().draw(false);
+                    console.log(`Total Not valid rows ${notvalid_rows_count}`)
+                    console.log(`notvalid_rows_arr is ${notvalid_rows_arr}`)
+                });
+                ////console.log($(".dataTable ").attr("class"))
+                colspan_array = []
+                $(".dataTable  > thead > tr:first-child th").each(function () {
+                    //alert("hi")
+                    //console.log("colspan_array : "+$(this).attr("colspan"))
+                    colspan_array.push($(this).attr("colspan"))
+                })
+                //console.log(colspan_array)
+                k = 1;
+                colspan_start = 0;
+                colspan_end = 0
+                for (colspan in colspan_array) {
+                    colspan_int = parseInt(colspan)
+                    colspan_start += parseInt(colspan_array[colspan_int])
+                    colspan_int_plus = colspan_int + 1;
+                    colspan_end = colspan_start + parseInt(colspan_array[colspan_int_plus])
+                    //console.log("colspan_start is "+colspan_start)
+                    //console.log("colspan_end is "+colspan_end)
+                    //console.log("k is "+k)
+                    //console.log("k/2 is "+k%2)
+                    if (k % 2 != 0) {
+                        //console.log("colspan_array[colspan_int] is "+colspan_array[colspan_int])
+                        if (colspan_end) {
+                            for (var i = colspan_start; i < colspan_end; i++) {
+                                //console.log("range in i "+i)
+                                $(table.column(i).nodes()).addClass('highlight');
+                            }
+                        }
+                    }
+                    k++;
                 }
                 console.log(`platformLength is ${platformLength}`)
                 if (platformLength <= 3 ) {
@@ -561,7 +594,8 @@
                 $(".dataTables_scrollHeadInner").children("table").css("width", "100%");
                 $("#example1").css("width", "100%");
                 }
-                
+              // $.LoadingOverlay("hide");
+                $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
             }
             function hide_all_platfrom(table) {
                 var dfrd1 = $.Deferred();
@@ -618,6 +652,7 @@
                     // Both asyncs tasks are done
                 }).promise();
             }
+
             resizeTimer = showdatatable(showdatatable, 600);//
         });
     </script>
