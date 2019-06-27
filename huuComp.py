@@ -380,15 +380,24 @@ def generateHtmlCompatibleData(ctx):
 
 							indexInHtmlReport = 0
 							rowInHtmlPresent =  False
+							rowAlreadyAdded =  False
 							for rowHtml in componentHTMLReport:
 								if row[0] == rowHtml[1]:
 									if row[1] == rowHtml[2]:
 										rowInHtmlPresent = True
 										break
 									else:
-										logging.warning("row description=%s doesn't match with existing report=%s", row[1], rowHtml[2])
-										rowInHtmlPresent = True
-										break
+										if row[2] == componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]:
+											logging.warning("rel=%s plat=%s entry '%s' duplicated with differnt descriptions = '%s', '%s'", release, platform, row[0], row[1], rowHtml[2])
+											componentHTMLReport[indexInHtmlReport][0] = '$$@@'
+											#s = componentHTMLReport[indexInHtmlReport][2] + '##' + row[1]
+											#componentHTMLReport[indexInHtmlReport][2] = s
+										else:
+											logging.warning("rel=%s plat=%s adding duplicate '%s' since description '%s', '%s' and fw version '%s', '%s' differs", release, platform, row[0], row[1], rowHtml[2],row[2],componentHTMLReport[indexInHtmlReport][ii + totalFixedCols])
+											htmlRow[ii + totalFixedCols] = row[2]
+											componentHTMLReport.append(htmlRow)
+											rowAlreadyAdded = True
+											break
 								indexInHtmlReport += 1
 
 							if rowInHtmlPresent:
@@ -401,9 +410,10 @@ def generateHtmlCompatibleData(ctx):
 									logging.debug('row present %s %s ',yy, componentHTMLReport[indexInHtmlReport][ii + totalFixedCols])
 									componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] = row[2]
 							else:
-								logging.debug('row absent adding now %s platform=%s,ii=%s', row,platform,ii)
-								htmlRow[ii + totalFixedCols] = row[2]
-								componentHTMLReport.append(htmlRow)
+								if not rowAlreadyAdded:
+									logging.debug('row absent adding now %s platform=%s,ii=%s', row,platform,ii)
+									htmlRow[ii + totalFixedCols] = row[2]
+									componentHTMLReport.append(htmlRow)
 
 		ctx.newHTML[component] = componentHTMLReport
 
