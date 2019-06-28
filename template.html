@@ -135,7 +135,7 @@
         #colSelectionSpan_unique button {
             font-weight: bold;
         }
-        #colSelectionSpan_unique {
+        #colSelectionSpan_unique, #show_description {
             margin: 2px 0 0 0;
             font-weight: bold;
         }
@@ -186,10 +186,18 @@
             z-index: 2147483647;
             opacity: 1;
         }
+        .fa {
+          
+           font-size: 5px !important;
+        }
+        small {
+            font-size: 7px !important;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/fixedcolumns/3.2.6/js/dataTables.fixedColumns.min.js"></script>
@@ -232,6 +240,7 @@
     {% set ns.alias = '' %}
     <div id="colSelectionSpan" style="visibility:hidden"></div>
     <div id="colSelectionSpan_unique"></div>
+    <div id="show_description"><label>Show description <input type="checkbox" value="" id="chk_show_desc" checked></label> </div>
     <div id="js_table"></div>
     <script>
         var data = {{ rData }}
@@ -320,6 +329,7 @@
             js_table_html += theadofhtml
             js_table_html += theadofhtml2
             js_table_html += "</thead>"
+            var display_star = false;
 
             js_table_html += "<tbody>"
             for (com in nwComponents) {
@@ -334,13 +344,22 @@
                          console.log(nwComponents[com][items][item])
                        
                             if (item == 1) {
+                                if (nwComponents[com][items][0].trim()!= 'N'){
+                                    display_star=true;
+                                } else {
+                                     display_star=false;
+                                }
+                                if (display_star) {
+                                js_table_html += "<td >" + nwComponents[com][items][1] + "  <span style='color:red;' class='fa fa-asterisk' ><span style='visibility:hidden'>*</span></span> <span style=opacity:0;width:0px;height:0px;display: block;>" + com + "</span></td>"
+                                } else {
                                 js_table_html += "<td >" + nwComponents[com][items][1] + "   <span style=opacity:0;width:0px;height:0px;display: block;>" + com + "</span></td>"
+                            }
                             }
                             if (item > 2) {
                                 if (nwComponents[com][items][item] == "N") {
                                     js_table_html += "<td id=marker class=no>&times</td>"
                                 } else {
-                                    js_table_html += "<td title='" + nwComponents[com][items][2] + "'  data-toggle='tooltip' >" + nwComponents[com][items][item] + " </td>"
+                                    js_table_html += "<td title='" + nwComponents[com][items][2] + "'  data-toggle='tooltip' >" + nwComponents[com][items][item] + " <small class='comp_desc'>("+nwComponents[com][items][2]+")</small></td>"
                                 }
                             }
                        
@@ -550,10 +569,11 @@
                     }
                 }
                 console.log(`platformLength is ${platformLength}`)
-                if (platformLength <= 3 ) {
-                $(".dataTables_scrollHeadInner").css("width", "100%");
-                $(".dataTables_scrollHeadInner").children("table").css("width", "100%");
-                $("#example1").css("width", "100%");
+                //if (platformLength <= 3 ) {
+                if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <=3) {
+                $(".dataTables_scrollHeadInner").css("width", "99%");
+                $(".dataTables_scrollHeadInner").children("table").css("width", "99%");
+                $("#example1").css("width", "99%");
                 }
               // $.LoadingOverlay("hide");
                 $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
@@ -615,6 +635,17 @@
             }
 
             resizeTimer = showdatatable(showdatatable, 600);//
+            
+            $("#chk_show_desc").click(function(){
+                 if($(this).prop("checked") == true){
+                
+                $(".comp_desc").css("visibility","visible")
+            }
+            else if($(this).prop("checked") == false){
+                
+                 $(".comp_desc").css("visibility","hidden")
+            }
+            })
         });
     </script>
 </body>
