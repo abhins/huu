@@ -18,6 +18,7 @@
             border: .2px solid black;
             text-align: left;
             padding: 15px;
+            font-weight: bold;
         }
         th {
             border: 1px solid black;
@@ -188,10 +189,10 @@
         }
         .fa {
           
-           font-size: 5px !important;
+           font-size: 10px !important;
         }
         small {
-            font-size: 7px !important;
+            font-weight: normal;
         }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -359,7 +360,7 @@
                                 if (nwComponents[com][items][item] == "N") {
                                     js_table_html += "<td id=marker class=no>&times</td>"
                                 } else {
-                                    js_table_html += "<td title='" + nwComponents[com][items][2] + "'  data-toggle='tooltip' >" + nwComponents[com][items][item] + " <small class='comp_desc'>("+nwComponents[com][items][2]+")</small></td>"
+                                    js_table_html += "<td title='" + nwComponents[com][items][2] + "'  data-toggle='tooltip' >" + nwComponents[com][items][item] + "<div><small class='comp_desc'>("+nwComponents[com][items][2]+")</small></div></td>"
                                 }
                             }
                        
@@ -512,6 +513,12 @@
                             table.column($(this).text()).visible(false);
                             $(this).addClass("hiddenCol")
                         }
+                        
+                         if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <= 3) {
+                $(".dataTables_scrollHeadInner").css("width", "99%");
+                $(".dataTables_scrollHeadInner").children("table").css("width", "99%");
+                $("#example1").css("width", "99%");
+                }
                         //$.LoadingOverlay("hide");
                         setTimeout(function () {
                             $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
@@ -570,7 +577,7 @@
                 }
                 console.log(`platformLength is ${platformLength}`)
                 //if (platformLength <= 3 ) {
-                if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <=3) {
+                if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <= 3) {
                 $(".dataTables_scrollHeadInner").css("width", "99%");
                 $(".dataTables_scrollHeadInner").children("table").css("width", "99%");
                 $("#example1").css("width", "99%");
