@@ -387,7 +387,6 @@ def generateHtmlCompatibleData(ctx):
 							'''
 							indexInHtmlReport = 0
 							rowInHtmlPresent =  False
-							rowAlreadyAdded =  False
 							for rowHtml in componentHTMLReport:
 								irow = [row[0],row[2]]
 								irowHtml = [rowHtml[1],rowHtml[3]]
