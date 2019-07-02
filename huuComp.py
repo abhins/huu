@@ -382,38 +382,25 @@ def generateHtmlCompatibleData(ctx):
 							rowInHtmlPresent =  False
 							rowAlreadyAdded =  False
 							for rowHtml in componentHTMLReport:
-								if row[0] == rowHtml[1]:
-									if row[1] == rowHtml[2]:
-										rowInHtmlPresent = True
-										break
-									else:
-										if row[2] == componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]:
-											logging.warning("rel=%s plat=%s entry '%s' duplicated with differnt descriptions = '%s', '%s'", release, platform, row[0], row[1], rowHtml[2])
-											componentHTMLReport[indexInHtmlReport][0] = '$$@@'
-											#s = componentHTMLReport[indexInHtmlReport][2] + '##' + row[1]
-											#componentHTMLReport[indexInHtmlReport][2] = s
-										else:
-											logging.warning("rel=%s plat=%s adding duplicate '%s' since description '%s', '%s' and fw version '%s', '%s' differs", release, platform, row[0], row[1], rowHtml[2],row[2],componentHTMLReport[indexInHtmlReport][ii + totalFixedCols])
-											htmlRow[ii + totalFixedCols] = row[2]
-											componentHTMLReport.append(htmlRow)
-											rowAlreadyAdded = True
-											break
+								if (row[0] == rowHtml[1]) and (row[1] == rowHtml[2]):
+									rowInHtmlPresent = True
+									break
 								indexInHtmlReport += 1
 
 							if rowInHtmlPresent:
-								yy = componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]
-
-								if yy != row[2] and yy != 'N':
-									#assert False, 'same key:value pair expected, exiting'
-									logging.warning('possible assert row=%s, yy=%s rel=%s plat=%s ii=%s', row,yy,release,platform,ii)
+								if (row[2] in componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]):
+									logging.warning('duplicate row')
 								else:
-									logging.debug('row present %s %s ',yy, componentHTMLReport[indexInHtmlReport][ii + totalFixedCols])
-									componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] = row[2]
+									logging.debug('row present, updating respective rel=%s, plat=%s with fw version=%s ',release,platform, row[2])
+									if 'N' == componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]:
+										componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] = row[2]
+									else:
+										s = componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] + ',' + row[2]
+										componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] = s
 							else:
-								if not rowAlreadyAdded:
-									logging.debug('row absent adding now %s platform=%s,ii=%s', row,platform,ii)
-									htmlRow[ii + totalFixedCols] = row[2]
-									componentHTMLReport.append(htmlRow)
+								logging.debug('row absent adding now rel=%s, plat=%s', row,platform)
+								htmlRow[ii + totalFixedCols] = row[2]
+								componentHTMLReport.append(htmlRow)
 
 		ctx.newHTML[component] = componentHTMLReport
 
