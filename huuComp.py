@@ -331,7 +331,7 @@ def processParsedData(ctx):
 
 def generateHtmlCompatibleData(ctx):
 
-	totalFixedCols = 3
+	totalColumns = 4
 	totalRelease = 0
 	totalPlatforms = 0
 
@@ -343,10 +343,10 @@ def generateHtmlCompatibleData(ctx):
 		for platform in sorted(ctx.finalData[release].keys()):
 			totalPlatforms += 1
 
-	htmlRow = ['N'] *(totalPlatforms + totalFixedCols)
+	totalColumns = totalPlatforms + totalColumns
+	htmlRow = ['N'] * totalColumns
 	ii = 0
 
-	logging.info('ctx.table_rows: %s', ctx.table_rows)
 	for component in sorted(ctx.table_rows.keys()):
 		ctx.newHTML[component] = []
 		componentHTMLReport = []
@@ -356,10 +356,9 @@ def generateHtmlCompatibleData(ctx):
 				ii += 1
 				if component in ctx.finalData[release][platform].keys():
 					for row in ctx.table_rows[component]:
-						logging.debug('considering row: %s', row)
-						#if row[0] in list(map(lambda x: x[0] , ctx.finalData[release][platform][component])):
+
 						if row in ctx.finalData[release][platform][component]:
-							htmlRow = ['N'] *  ((totalPlatforms + totalFixedCols))
+							htmlRow = ['N'] * totalColumns
 
 							newL = len(row)
 							if newL > 3:
@@ -375,31 +374,40 @@ def generateHtmlCompatibleData(ctx):
 							else:
 								pass
 
-							htmlRow[1] = row[0]
-							htmlRow[2] = row[1]
+							i = 1
 
+							for elem in row:
+								htmlRow[i] = elem
+								i += 1
+								print('CHECKING ROW', row)
+							'''
+							check if 'row' is present in htmlReport
+							if present then mark it Y
+							if not present then add it and mark it Y
+							'''
 							indexInHtmlReport = 0
 							rowInHtmlPresent =  False
 							rowAlreadyAdded =  False
 							for rowHtml in componentHTMLReport:
-								if (row[0] == rowHtml[1]) and (row[1] == rowHtml[2]):
+								irow = [row[0],row[2]]
+								irowHtml = [rowHtml[1],rowHtml[3]]
+								if irow == irowHtml:
 									rowInHtmlPresent = True
 									break
 								indexInHtmlReport += 1
 
 							if rowInHtmlPresent:
-								if (row[2] in componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]):
-									logging.warning('duplicate row')
+								yy = componentHTMLReport[indexInHtmlReport][ii + 4]
+
+								if yy != row[2] and yy != 'N':
+									logging.debug('row present %s ',componentHTMLReport[indexInHtmlReport][ii + 4])
+									assert False, 'same key:value pair expected, exiting'
 								else:
-									logging.debug('row present, updating respective rel=%s, plat=%s with fw version=%s ',release,platform, row[2])
-									if 'N' == componentHTMLReport[indexInHtmlReport][ii + totalFixedCols]:
-										componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] = row[2]
-									else:
-										s = componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] + ',' + row[2]
-										componentHTMLReport[indexInHtmlReport][ii + totalFixedCols] = s
+									logging.debug('row present %s %s ',yy, componentHTMLReport[indexInHtmlReport][ii + 4])
+									componentHTMLReport[indexInHtmlReport][ii + 4] = row[2]
 							else:
-								logging.debug('row absent adding now rel=%s, plat=%s', row,platform)
-								htmlRow[ii + totalFixedCols] = row[2]
+								logging.debug('row absent adding now %s ', row)
+								htmlRow[ii + 4] = row[2]
 								componentHTMLReport.append(htmlRow)
 
 		ctx.newHTML[component] = componentHTMLReport
@@ -445,7 +453,7 @@ def parseReleaseNotes(fileList):
 	m.add_state("MISSING_REL_PLAT", end_fsm_error)
 	m.add_state("DUPLICATE_REL_PLAT", end_fsm_error)
 	m.add_state("MISSING_COMPONENTS", end_fsm_error)
-	m.add_state("MISSING_HDD_COMPONENT", end_fsm)
+	m.add_state("MISSING_HDD_COMPONENT", end_fsm_error)
 	m.add_state("EOF_IN_FETCH_HDD_COMPONENT", addDummyMarkerAfterHdd)
 	m.add_state("END", end_fsm)
 	m.add_state("CLEANUP", None, end_state=1)
