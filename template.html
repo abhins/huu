@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <style type="text/css">
@@ -8,18 +9,22 @@
             height: 100%;
             font-size: .8em;
         }
+
         .table-fixed {
             background-color: #f3f3f3;
         }
+
         .table-fixed {
             border-collapse: collapse;
         }
+
         td {
             border: .2px solid black;
             text-align: left;
             padding: 15px;
             font-weight: bold;
         }
+
         th {
             border: 1px solid black;
             text-align: left;
@@ -28,12 +33,15 @@
             color=white;
             font-size: 120%;
         }
+
         #marker {
             text-align: right;
         }
+
         .header {
             background-color: #004BAF;
         }
+
         h1 {
             margin: 0;
             padding: 10px;
@@ -42,6 +50,7 @@
             color: #ffffff;
             font-weight: normal;
         }
+
         .dataTables_filter {
             /* margin: -5.5em 0 10px 0;*/
             position: fixed;
@@ -49,55 +58,69 @@
             right: 0;
             margin: 1.2em;
         }
+
         .dataTables_filter label {
             color: white;
         }
+
         table.dataTable.stripe tbody tr.odd,
         table.dataTable.display tbody tr.odd {
             background-color: #E8EBF1 !important;
         }
+
         .example {
             font-size: .8em;
         }
+
         .no {
             color: red;
             font-size: 1.38em;
         }
+
         .yes {
             color: green;
             font-size: 1.38em;
         }
+
         .no-border-right {
             border-right: none;
         }
+
         .no-border-left {
             border-left: none;
         }
+
         table.dataTable thead th,
         table.dataTable thead td {
             background-color: #C4D6ED !important;
         }
+
         a {
             cursor: pointer;
             color: #3174c7;
             text-decoration: none;
         }
+
         #columnIds {
             margin-top: 10px;
         }
+
         .red {
             color: red;
         }
+
         #colSelectionSpan>a.toggle-vis.hiddenCol,
         #colSelectionSpan_unique>a.toggle-vis.hiddenCol {
             color: #fd4141;
             border-color: #fd4141;
         }
+
         #colSelectionSpan>button.toggle-vis.hiddenCol,
         #colSelectionSpan_unique>button.toggle-vis.hiddenCol {
             color: #fd4141;
             border-color: #fd4141;
         }
+
         #colSelectionSpan>a,
         #colSelectionSpan_unique>a {
             height: 0px;
@@ -105,50 +128,64 @@
             display: block;
             overflow: hidden;
         }
+
         .DTFC_LeftBodyLiner {
             overflow-y: hidden !important;
         }
+
         #colSelectionSpan {
             width: 0px;
             height: 0px;
         }
+
         table.dataTable thead tr:first-child th {
             background-color: #E8EBF1 !important
         }
+
         .toggle-vis {
             margin: 0 5px
         }
+
         .app-icon-excel {
             width: 16px;
             height: 16px;
             /* background: url(images/HCL-sprite.png); */
             background-position: 62px -25px;
         }
+
         .dataTables_wrapper .dataTables_filter input {
             margin-left: 0.5em;
             width: 20em;
             height: 2em;
         }
+
         .component_title {
             font-weight: bold;
             background-color: #008CCC !important;
         }
+
         #colSelectionSpan_unique button {
             font-weight: bold;
         }
-        #colSelectionSpan_unique, #show_description {
+
+        #colSelectionSpan_unique,
+        #show_description {
             margin: 2px 0 0 0;
             font-weight: bold;
         }
+
         .dataTables_wrapper .dataTables_info {
             font-weight: bold;
         }
+
         col:nth-child(2n+2) {
             background: #CCC
         }
+
         td.highlight {
             background-color: wheat;
         }
+
         .loader {
             border: 16px solid #f3f3f3;
             /* Light grey */
@@ -164,14 +201,17 @@
             left: 42%;
             display: none;
         }
+
         @keyframes loadingoverlay_animation__rotate_right {
             0% {
                 transform: rotate(0deg);
             }
+
             100% {
                 transform: rotate(360deg);
             }
         }
+
         .loadingoverlay {
             box-sizing: border-box;
             position: fixed;
@@ -187,16 +227,29 @@
             z-index: 2147483647;
             opacity: 1;
         }
-        .fa {          
-           font-size: 10px !important;
+
+        .fa {
+            font-size: 10px !important;
         }
+
         small {
             font-weight: normal;
         }
+
+        .diff>td {
+
+            background: #ff00004f;
+        }
+
+        tr>td:nth-child(1) {
+            background: #fff;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/fixedcolumns/3.2.6/css/fixedColumns.dataTables.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/1.5.4/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -211,6 +264,7 @@
     <script src="https://cdn.datatables.net/buttons/1.5.4/js/buttons.print.min.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js" ></script> -->
 </head>
+
 <body>
     <div class="loader"></div>
     <div class="loadingoverlay" id="loadingoverlay">
@@ -240,7 +294,9 @@
     {% set ns.alias = '' %}
     <div id="colSelectionSpan" style="visibility:hidden"></div>
     <div id="colSelectionSpan_unique"></div>
-    <div id="show_description"><label>Show description <input type="checkbox" value="" id="chk_show_desc" checked></label> </div>
+    <div id="show_description"><label>Show description <input type="checkbox" value="" id="chk_show_desc"
+                checked></label> </div>
+    <div><button id="btnSubmit" class="dt-button">Compare</button> </div>
     <div id="js_table"></div>
     <script>
         var data = {{ rData }}
@@ -270,6 +326,7 @@
                         <col  span={{ ns.platPerRelease }} >    \
                     {% endfor %} \
                 </colgroup>'
+        //Release name
         var theadofhtml = '<tr> \
                     <th colspan=1 style=text-align: right; ></th> \
                     {% for keys1 in header|dictsort(reverse=true) %} 	\
@@ -295,6 +352,7 @@
                         <th colspan={{ ns.platPerRelease }}> {{ keys1[0] }} ({{ ns.alias}})   </th> \
                     {% endfor %} \
                 </tr>'
+        //Platform Name
         var theadofhtml2 = '<tr> \
                     <th>Component</th> \
                         {% for keys1 in header|dictsort(reverse=true) %} 	\
@@ -303,7 +361,7 @@
                             {% for keys2 in header[keys1[0]]|dictsort %} 			\
                                 {% set ns.platPerRelease = ns.platPerRelease +1  %} 	\
                                 {% set ns.total_cols = ns.total_cols +1  %} 		\
-                                <th>{{ keys2[0] }}</th>  	\
+                                <th>{{ keys2[0] }} <input type="checkbox" checked style="visibility:hidden"></th>  	\
                             {% endfor %} \
                         {% endfor %} \
                    </tr>'
@@ -317,12 +375,12 @@
                                 {% endfor %} \
                         {% endfor %}  '
         $(document).ready(function () {
-        console.log(typeof(data))
-           // nwComponents = {};
-           nwComponents = data;
-           
+            console.log(typeof (data))
+            // nwComponents = {};
+            nwComponents = data;
+
             console.log("final components")
-           // console.log( JSON.stringify(nwComponents))
+            // console.log( JSON.stringify(nwComponents))
             js_table_html = "<table id='example1' class= pageResize>"
             js_table_html += colgroup
             js_table_html += "<thead>"
@@ -336,34 +394,34 @@
                 js_table_html += "<tr>"
                 js_table_html += "<td  class=component_title  >" + com + "</td>" + js_table_dummy_td
                 js_table_html += "</tr>"
-               // console.log(JSON.stringify(nwComponents[com]))
+                // console.log(JSON.stringify(nwComponents[com]))
                 for (items in nwComponents[com]) {
                     js_table_html += "<tr>"
-                  
-                    for (item=0; item<(nwComponents[com][items].length);item++){
-                         console.log(nwComponents[com][items][item])
-                       
-                            if (item == 1) {
-                                if (nwComponents[com][items][0].trim()!= 'N'){
-                                    display_star=true;
-                                } else {
-                                     display_star=false;
-                                }
-                                if (display_star) {
+
+                    for (item = 0; item < (nwComponents[com][items].length); item++) {
+                        console.log(nwComponents[com][items][item])
+
+                        if (item == 1) {
+                            if (nwComponents[com][items][0].trim() != 'N') {
+                                display_star = true;
+                            } else {
+                                display_star = false;
+                            }
+                            if (display_star) {
                                 js_table_html += "<td >" + nwComponents[com][items][1] + "  <span style='color:red;' class='fa fa-asterisk' ><span style='visibility:hidden'>*</span></span> <span style=opacity:0;width:0px;height:0px;display: block;>" + com + "</span></td>"
-                                } else {
+                            } else {
                                 js_table_html += "<td >" + nwComponents[com][items][1] + "   <span style=opacity:0;width:0px;height:0px;display: block;>" + com + "</span></td>"
                             }
-                            }
-                            if (item > 2) {
-                                if (nwComponents[com][items][item] == "N") {
-                                    js_table_html += "<td id=marker class=no>&times</td>"
-                                } else {
-                                    js_table_html += "<td title='" + nwComponents[com][items][2] + "'  data-toggle='tooltip' >" + nwComponents[com][items][item] + "<div><small class='comp_desc'>("+nwComponents[com][items][2]+")</small></div></td>"
+                        }
+                        if (item > 2) {
+                            if (nwComponents[com][items][item] == "N") {
+                                js_table_html += "<td id=marker class=no>&times</td>"
+                            } else {
+                                js_table_html += "<td title='" + nwComponents[com][items][2] + "'  data-toggle='tooltip' >" + nwComponents[com][items][item] + "<div><small class='comp_desc'>(" + nwComponents[com][items][2] + ")</small></div></td>"
 
-                                }
                             }
-                       
+                        }
+
                     }
                     js_table_html += "</tr>"
                 }
@@ -513,12 +571,12 @@
                             table.column($(this).text()).visible(false);
                             $(this).addClass("hiddenCol")
                         }
-                        
-                         if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <= 3) {
-                $(".dataTables_scrollHeadInner").css("width", "99%");
-                $(".dataTables_scrollHeadInner").children("table").css("width", "99%");
-                $("#example1").css("width", "99%");
-                }
+
+                        if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <= 3) {
+                            $(".dataTables_scrollHeadInner").css("width", "99%");
+                            $(".dataTables_scrollHeadInner").children("table").css("width", "99%");
+                            $("#example1").css("width", "99%");
+                        }
                         //$.LoadingOverlay("hide");
                         setTimeout(function () {
                             $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
@@ -562,29 +620,30 @@
                 }
                 // $.LoadingOverlay("hide");
                 $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
-                var headerLen = {{header}}
-              
-                var platformLength=0;        
-                console.log(`headerLen ${headerLen} ${Object.keys(headerLen).length}`)
-                for (head in headerLen) {
-                    console.log(`head ${head} `)
-                    
-                    for (plKeys in headerLen[head]){
-                        console.log(`headerLen[head] ${headerLen[head]} `)
-                        console.log(`plKeys ${plKeys} `)
-                        platformLength++;
-                    }
+                var headerLen = {{ header }
+            }
+
+            var platformLength = 0;
+            console.log(`headerLen ${headerLen} ${Object.keys(headerLen).length}`)
+            for (head in headerLen) {
+                console.log(`head ${head} `)
+
+                for (plKeys in headerLen[head]) {
+                    console.log(`headerLen[head] ${headerLen[head]} `)
+                    console.log(`plKeys ${plKeys} `)
+                    platformLength++;
                 }
-                console.log(`platformLength is ${platformLength}`)
-                //if (platformLength <= 3 ) {
-                if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <= 3) {
+            }
+            console.log(`platformLength is ${platformLength}`)
+            //if (platformLength <= 3 ) {
+            if ($(".pageResize").eq("0").children("thead").children("tr:nth-child(1)").children("th").length <= 3) {
                 $(".dataTables_scrollHeadInner").css("width", "99%");
                 $(".dataTables_scrollHeadInner").children("table").css("width", "99%");
                 $("#example1").css("width", "99%");
-                }
-              // $.LoadingOverlay("hide");
-                $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
             }
+            // $.LoadingOverlay("hide");
+            $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
+        }
             function hide_all_platfrom(table) {
                 var dfrd1 = $.Deferred();
                 console.log($("#colSelectionSpan a").length)
@@ -642,18 +701,56 @@
             }
 
             resizeTimer = showdatatable(showdatatable, 600);//
-            
-            $("#chk_show_desc").click(function(){
-                 if($(this).prop("checked") == true){
-                
-                $(".comp_desc").css("visibility","visible")
+
+        $("#chk_show_desc").click(function () {
+            if ($(this).prop("checked") == true) {
+
+                $(".comp_desc").css("visibility", "visible")
             }
-            else if($(this).prop("checked") == false){
-                
-                 $(".comp_desc").css("visibility","hidden")
+            else if ($(this).prop("checked") == false) {
+
+                $(".comp_desc").css("visibility", "hidden")
             }
-            })
-        });
+        })
+
+        $("#btnSubmit").click(function () {
+            // console.log($("#pageResize ").children("tbody").children("tr").children("td").find("input:checked").length)
+            if ($(".pageResize > thead > tr:nth-child(2)> th> input:checked").length > 1) {
+
+                $("#example1").children("tbody").children("tr").each(function (index_tr, value_tr) {
+                    arr = []
+                    //console.log($(this).children("td").html())
+                    $(this).children("td").each(function (i, v) {
+                        if (i != 0) {
+                            console.log(v, i)
+                            arr.push($(this).html())
+                        }
+                    })
+
+
+                    console.log("-------")
+                    console.log(arr)
+                    if (new Set(arr).size == 1) {
+                        console.log("Same")
+                    } else {
+                        console.log("Not Same")
+                        $(this).addClass("diff")
+                    }
+
+
+                    //return new Set(arr).size == 1;
+                    console.log("-------")
+                })
+
+
+            } else {
+                alert("Comparison required minimum two selection")
+            }
+        })
+
+   })// document end javascript      
+
     </script>
 </body>
+
 </html>
