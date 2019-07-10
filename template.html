@@ -361,7 +361,7 @@
                             {% for keys2 in header[keys1[0]]|dictsort %} 			\
                                 {% set ns.platPerRelease = ns.platPerRelease +1  %} 	\
                                 {% set ns.total_cols = ns.total_cols +1  %} 		\
-                                <th>{{ keys2[0] }} <input type="checkbox" checked /*style="visibility:hidden"*/ ></th>  	\
+                                <th>{{ keys2[0] }} <input type="checkbox"   ></th>  	\
                             {% endfor %} \
                         {% endfor %} \
                    </tr>'
