@@ -236,9 +236,9 @@
             font-weight: normal;
         }
 
-        .diff>td {
+        .diff {
 
-            background: #ff00004f;
+            background: #ff00004f  !important;
         }
 
         tr>td:nth-child(1) {
@@ -361,7 +361,7 @@
                             {% for keys2 in header[keys1[0]]|dictsort %} 			\
                                 {% set ns.platPerRelease = ns.platPerRelease +1  %} 	\
                                 {% set ns.total_cols = ns.total_cols +1  %} 		\
-                                <th>{{ keys2[0] }} <input type="checkbox" checked style="visibility:hidden"></th>  	\
+                                <th>{{ keys2[0] }} <input type="checkbox" checked /*style="visibility:hidden"*/ ></th>  	\
                             {% endfor %} \
                         {% endfor %} \
                    </tr>'
@@ -622,7 +622,6 @@
                 $(".loadingoverlay").css({ "opacity": "0", "display": "none" })
                 var headerLen = {{ header }}
 
-            }
             var platformLength = 0;
             console.log(`headerLen ${headerLen} ${Object.keys(headerLen).length}`)
             for (head in headerLen) {
@@ -714,18 +713,43 @@
         })
 
         $("#btnSubmit").click(function () {
-            // console.log($("#pageResize ").children("tbody").children("tr").children("td").find("input:checked").length)
-            if ($(".pageResize > thead > tr:nth-child(2)> th> input:checked").length > 1) {
+             console.log($(".pageResize > thead > tr:nth-child(2)> th> input:checked").length)
+                if ($(".pageResize > thead > tr:nth-child(2)> th> input:checked").length > 1) {
 
+               } else {
+                alert("Comparison required minimum two selection")
+                return false;
+            }
+             chk_index=0;
+             col_comp_arr =[];
+             $(".pageResize > thead > tr:nth-child(2)> th> input").each(function (index_th, value_th) {
+                
+                if ($(this).prop("checked")== true) {
+                console.log(chk_index, $(this).parent("th").html())
+                
+                 chk_index_td=chk_index+2;
+                 col_comp_arr.push(chk_index_td)
+                  } else {
+                
+                }
+                  chk_index++;
+             })
+                
                 $("#example1").children("tbody").children("tr").each(function (index_tr, value_tr) {
                     arr = []
-                    //console.log($(this).children("td").html())
-                    $(this).children("td").each(function (i, v) {
-                        if (i != 0) {
-                            console.log(v, i)
-                            arr.push($(this).html())
-                        }
-                    })
+                    console.log("index_tr ", index_tr)
+                    console.log("value_tr ", value_tr)
+                    console.log("col_comp_arr", col_comp_arr)
+                   
+                     console.log("check point",$(this).children("td:nth-child("+chk_index_td+")").html())
+                     
+                    //$(this).children("td:nth-child("+chk_index_td+")").each(function (i, v) {
+                    for (let c=0;c<col_comp_arr.length;c++){
+                       // if (i != 0) {
+                            console.log($(this).children("td:nth-child("+col_comp_arr[c]+")").html())
+                            arr.push($(this).children("td:nth-child("+col_comp_arr[c]+")").html())
+                        //}
+                    }
 
 
                     console.log("-------")
@@ -734,18 +758,19 @@
                         console.log("Same")
                     } else {
                         console.log("Not Same")
-                        $(this).addClass("diff")
+                        for (let d=0;d<col_comp_arr.length;d++){
+                        $(this).children("td:nth-child("+col_comp_arr[d]+")").addClass("diff")
+                        }
                     }
 
 
                     //return new Set(arr).size == 1;
                     console.log("-------")
                 })
-
-
-            } else {
-                alert("Comparison required minimum two selection")
-            }
+               
+               
+            
+         
         })
 
    })// document end javascript      
