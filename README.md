@@ -1,1 +1,1 @@
-#Host Update Utility Release Notes Comparison Generator
+#Release Notes Comparison Generator
